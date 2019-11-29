@@ -4,15 +4,11 @@ import './index.css';
 
 import Trick from './Trick'
 
-const title = <h1 id="title">Trick Score Calculator</h1>
-
 function addTricks() {
-
+  console.log("Hello Reid hey hey hey");
 }
 
-
-
-class Storage extends React.Component {
+class Application extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,12 +16,18 @@ class Storage extends React.Component {
             size: 0,
         }
     }
+
+    render() {
+      return(
+        <h1 id="title">Trick Score Calculator</h1>
+      );
+    }
 }
   
   // ========================================
   
   ReactDOM.render(
-    title,
+    <Application />,
     document.getElementById('root')
   );
   
