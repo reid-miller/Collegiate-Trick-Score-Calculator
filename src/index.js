@@ -49,17 +49,32 @@ class TrickList extends React.Component {
   }
 }
 
-class Game extends React.Component {
+class Application extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tricks: [{
+        spins: Array(9).fill(null),
+        stepovers: Array(9).fill(null),
+        toes: Array(9).fill(null),
+        flips: Array(9).fill(null),
+        skilines: Array(9).fill(null),
+      }],
+    }
+  }
+
   render() {
     return (
-      <div className="game">
+      <div className="application">
       <h1 id="title">Trick Calculator</h1>
-        <div className="game-board">
-          <TrickList />
-        </div>
-        <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
+        <div className="button-board">
+          <TrickList 
+          spins={this.state.spins}
+          stepovers={this.state.stepovers}
+          toes={this.state.toes}
+          flips={this.state.flips}
+          skilines={this.state.skilines}
+          />
         </div>
       </div>
     );
@@ -69,6 +84,6 @@ class Game extends React.Component {
 // ========================================
 
 ReactDOM.render(
-  <Game />,
+  <Application />,
   document.getElementById('root')
 );
