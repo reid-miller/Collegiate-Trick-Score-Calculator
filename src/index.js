@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import trickListText from './data.js';
 
 import Trick from './Trick'
 
@@ -23,12 +24,20 @@ class TrickList extends React.Component {
   }
 
   render() {
-    var arr=["one", "two", "three", "four"];
-        var elements=[];
-        for(var i=0;i<arr.length;i++){
-             // push the component to elements!
-            elements.push(<TrickButton name={ arr[i] } />);
-        }
+    //Create trick buttons and components
+    var arr=trickListText.split("\n");
+    var elements=[];
+    // push the component to elements
+    for(var i=0;i<arr.length;i++){
+        var trick = arr[i]; // String of trick with name and score
+
+        //name of element
+        var name = trick.substring(0, trick.indexOf("-")-1);
+        trick = trick.substring(trick.indexOf("-") + 2, trick.length); // Cut off info we already have
+        trick = trick.split(" ");
+        elements.push(<TrickButton name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
+        trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]}/>);
+    }
     return (
       <div>
         <div className="button-row">
@@ -61,6 +70,13 @@ class Application extends React.Component {
         skilines: Array(9).fill(null),
       }],
     }
+    this.addTricks();
+  }
+
+  addTricks() {
+    console.log(trickListText);
+    console.log("da");
+    console.log(trickListText.split("\n"));
   }
 
   render() {
