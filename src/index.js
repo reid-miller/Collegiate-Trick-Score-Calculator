@@ -16,11 +16,15 @@ class TrickButton extends React.Component {
 }
 
 class TrickList extends React.Component {
-  
+
   renderTrickButton(name) {
     return <TrickButton 
-    name={name}
+    name={"El cac"}
     />;
+  }
+
+  handleClick(points) {
+    console.log("You are a genius");
   }
 
   render() {
@@ -35,8 +39,8 @@ class TrickList extends React.Component {
         var name = trick.substring(0, trick.indexOf("-")-1);
         trick = trick.substring(trick.indexOf("-") + 2, trick.length); // Cut off info we already have
         trick = trick.split(" ");
-        elements.push(<TrickButton name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
-        trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]}/>);
+        elements.push(<Trick name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
+        trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]} onClick={(i) => this.handleClick(i)}/>);
     }
     return (
       <div>

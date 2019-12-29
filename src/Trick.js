@@ -13,6 +13,14 @@ class Trick extends React.Component {
             scoreWake1Ski: this.props.scoreWake1Ski,
         }
     }
+
+    render() {
+        return (
+          <button onClick={() => console.log("wefwef")}className="trick-button">
+            {this.props.name}
+          </button>
+        );
+      }
 }
 
 export default Trick;
