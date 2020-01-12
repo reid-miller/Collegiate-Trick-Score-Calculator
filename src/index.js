@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import trickListText from './data.js';
 
@@ -24,7 +25,8 @@ class TrickList extends React.Component {
   }
 
   handleClick(points) {
-    console.log("You are a genius");
+    console.log(points);
+    this.props.onClick(this.props.name);
   }
 
   render() {
@@ -40,7 +42,7 @@ class TrickList extends React.Component {
         trick = trick.substring(trick.indexOf("-") + 2, trick.length); // Cut off info we already have
         trick = trick.split(" ");
         elements.push(<Trick name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
-        trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]} onClick={(i) => this.handleClick(i)}/>);
+        trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]} onClick={(data) => this.props.onClick(data)}/>);
     }
     return (
       <div>
@@ -66,6 +68,7 @@ class Application extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      score: 0,
       tricks: [{
         spins: Array(9).fill(null),
         stepovers: Array(9).fill(null),
@@ -83,12 +86,21 @@ class Application extends React.Component {
     console.log(trickListText.split("\n"));
   }
 
+  // Update score
+  handleClick(i) {
+    console.log(i);
+    this.setState({ score: i })
+  }
+
   render() {
+    const score = this.state.score;
     return (
       <div className="application">
       <h1 id="title">Trick Calculator</h1>
+      <div class="text-center">{score}</div>
         <div className="button-board">
           <TrickList 
+          onClick={(i) => this.handleClick(i)}
           spins={this.state.spins}
           stepovers={this.state.stepovers}
           toes={this.state.toes}
