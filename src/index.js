@@ -6,23 +6,7 @@ import trickListText from './data.js';
 
 import Trick from './Trick'
 
-class TrickButton extends React.Component {
-  render() {
-    return (
-      <button className="trick-button">
-        {this.props.name}
-      </button>
-    );
-  }
-}
-
 class TrickList extends React.Component {
-
-  renderTrickButton(name) {
-    return <TrickButton 
-    name={"El cac"}
-    />;
-  }
 
   handleClick(points) {
     console.log(points);
@@ -46,16 +30,6 @@ class TrickList extends React.Component {
     }
     return (
       <div>
-        <div className="button-row">
-          {this.renderTrickButton("Front flip")}
-          {this.renderTrickButton(1)}
-          {this.renderTrickButton(2)}
-        </div>
-        <div className="button-row">
-          {this.renderTrickButton(3)}
-          {this.renderTrickButton(4)}
-          {this.renderTrickButton(5)}
-        </div>
         <div className="button-row">
           {elements}
         </div>
@@ -89,16 +63,16 @@ class Application extends React.Component {
   // Update score
   handleClick(i) {
     console.log(i);
-    this.setState({ score: i })
+    this.setState({ score: parseInt(this.state.score, 10) + parseInt(i, 10) })
   }
 
   render() {
     const score = this.state.score;
     return (
-      <div className="application">
+      <div class="application">
       <h1 id="title">Trick Calculator</h1>
       <div class="text-center">{score}</div>
-        <div className="button-board">
+        <div class="container">
           <TrickList 
           onClick={(i) => this.handleClick(i)}
           spins={this.state.spins}
