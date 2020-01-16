@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
-import trickListText from './data.js';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
+import trickListText from './data.js';
 import Trick from './Trick'
 
 class TrickList extends React.Component {
@@ -44,9 +46,9 @@ class TrickList extends React.Component {
         <div className="trick-container row">
           <div className="d-flex flex-column"><h3>Spins</h3>{spins}</div>
           <div className="d-flex flex-column"><h3>Stepovers</h3>{stepovers}</div>
-          <div className="d-flex flex-column">{toes}</div>
-          <div className="d-flex flex-column">{flips}</div>
-          <div className="d-flex flex-column">{skilines}</div>
+          <div className="d-flex flex-column"><h3>Toes</h3>{toes}</div>
+          <div className="d-flex flex-column"><h3>Flips</h3>{flips}</div>
+          <div className="d-flex flex-column"><h3>Skilines</h3>{skilines}</div>
         </div>
       </div>
     );
@@ -58,6 +60,8 @@ class Application extends React.Component {
     super(props);
     this.state = {
       score: 0,
+      oneSki : true,
+
       tricks: [{
         spins: Array(9).fill(null),
         stepovers: Array(9).fill(null),
@@ -66,13 +70,6 @@ class Application extends React.Component {
         skilines: Array(9).fill(null),
       }],
     }
-    this.addTricks();
-  }
-
-  addTricks() {
-    console.log(trickListText);
-    console.log("da");
-    console.log(trickListText.split("\n"));
   }
 
   // Update score
@@ -81,12 +78,52 @@ class Application extends React.Component {
     this.setState({ score: parseInt(this.state.score, 10) + parseInt(i, 10) })
   }
 
+  switchSki() {
+
+    //Let the user know that their score will reset
+    confirmAlert({
+      title: 'What Type of Ski Would You Like to Use?',
+      message: 'Note: Score will reset when switching skis!',
+      buttons: [
+        {
+          label: 'One Ski',
+          onClick: () => this.setState({oneSki: true})
+        },
+        {
+          label: 'Two Ski',
+          onClick: () => this.setState({oneSki: false})
+        },
+        {
+          label: 'Wake Board',
+          onClick: () => alert("Sorry can't do that just yet!")
+        },
+        {
+          label: 'Knee Board',
+          onClick: () => alert("Sorry can't do that just yet!")
+        }
+      ]
+    });
+
+    this.reset();
+  }
+  //Reset score
+  reset() {
+    this.setState({score: 0}); // Reset Score
+  }
+
   render() {
     const score = this.state.score;
     return (
       <div className="application">
-      <h1 className="text-center">Trick Calculator</h1>
-      <div className="text-center">{score}</div>
+        <h1 className="text-center">Trick Calculator</h1>
+        <div className="text-center">{score}</div>
+
+        <div className="text-center">
+        <button onClick={() => this.reset()}>Reset</button>
+        <div>You are on {this.state.oneSki ? "one ski" : "two skis"}</div>
+        <button onClick={() => this.switchSki()}>Switch Ski</button>
+        </div>
+
         <div>
           <TrickList 
           onClick={(i) => this.handleClick(i)}

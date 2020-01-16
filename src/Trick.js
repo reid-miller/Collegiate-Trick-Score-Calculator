@@ -16,7 +16,17 @@ class Trick extends React.Component {
 
     render() {
         return (
-          <button onClick={() => this.props.onClick(this.props.score1Ski)} className="">
+          <button onClick={() => 
+            {
+              // If this is only a wake trick then return the wake options
+              if(this.props.trickCode === "%"){
+                this.props.onClick(this.props.scoreWake1Ski);
+              } else {
+                this.props.onClick(this.props.score1Ski);
+              }
+            }  
+          }>
+
             {this.props.name}
           </button>
         );
