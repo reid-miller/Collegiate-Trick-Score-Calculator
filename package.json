@@ -2,7 +2,7 @@
   "name": "collegiate-trick-score-calculator",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://reid-miller.github.io/Collegiate-Trick-Score-Calculator"
+  "homepage": "http://reid-miller.github.io/Collegiate-Trick-Score-Calculator",
   "dependencies": {
     "bootstrap": "^4.4.1",
     "react": "^16.12.0",
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
