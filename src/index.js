@@ -16,22 +16,37 @@ class TrickList extends React.Component {
   render() {
     //Create trick buttons and components
     var arr=trickListText.split("\n");
-    var elements=[];
+    var spins=[];
+    var stepovers=[];
+    var toes=[];
+    var flips=[];
+    var skilines=[];
+    var elements=[spins, stepovers, toes, flips, skilines];
     // push the component to elements
+
+    var typeOfTrick = 0;
     for(var i=0;i<arr.length;i++){
         var trick = arr[i]; // String of trick with name and score
 
+        if(trick !== "@") {
         //name of element
         var name = trick.substring(0, trick.indexOf("-")-1);
         trick = trick.substring(trick.indexOf("-") + 2, trick.length); // Cut off info we already have
         trick = trick.split(" ");
-        elements.push(<Trick name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
+        elements[typeOfTrick].push(<Trick name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
         trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]} onClick={(data) => this.props.onClick(data)}/>);
+        } else {
+          typeOfTrick += 1;
+        }
     }
     return (
       <div>
-        <div className="button-row">
-          {elements}
+        <div className="trick-container row">
+          <div className="d-flex flex-column"><h3>Spins</h3>{spins}</div>
+          <div className="d-flex flex-column"><h3>Stepovers</h3>{stepovers}</div>
+          <div className="d-flex flex-column">{toes}</div>
+          <div className="d-flex flex-column">{flips}</div>
+          <div className="d-flex flex-column">{skilines}</div>
         </div>
       </div>
     );
@@ -69,10 +84,10 @@ class Application extends React.Component {
   render() {
     const score = this.state.score;
     return (
-      <div class="application">
-      <h1 id="title">Trick Calculator</h1>
-      <div class="text-center">{score}</div>
-        <div class="container">
+      <div className="application">
+      <h1 className="text-center">Trick Calculator</h1>
+      <div className="text-center">{score}</div>
+        <div>
           <TrickList 
           onClick={(i) => this.handleClick(i)}
           spins={this.state.spins}

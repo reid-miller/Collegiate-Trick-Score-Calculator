@@ -16,7 +16,7 @@ class Trick extends React.Component {
 
     render() {
         return (
-          <button onClick={() => this.props.onClick(this.props.score1Ski)}className="trick-button">
+          <button onClick={() => this.props.onClick(this.props.score1Ski)} className="">
             {this.props.name}
           </button>
         );

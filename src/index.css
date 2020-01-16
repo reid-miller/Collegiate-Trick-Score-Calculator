@@ -1,9 +1,4 @@
-
-#title {
-    text-align: center;
+.trick-container {
+    justify-content: space-around;
+    flex-wrap: nowrap;
 }
-/*
-.button-row:after {
-    display: table;
-  }
-  */
