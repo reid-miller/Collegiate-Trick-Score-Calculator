@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA,iBACI,4BAA6B,CAC7B,gBACJ","file":"main.969ead9a.chunk.css","sourcesContent":[".trick-container {\r\n    justify-content: space-around;\r\n    flex-wrap: nowrap;\r\n}"]}
