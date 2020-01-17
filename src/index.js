@@ -36,7 +36,8 @@ class TrickList extends React.Component {
         trick = trick.substring(trick.indexOf("-") + 2, trick.length); // Cut off info we already have
         trick = trick.split(" ");
         elements[typeOfTrick].push(<Trick name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
-        trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]} onClick={(data) => this.props.onClick(data)}/>);
+        trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]} 
+        onClick={(data) => this.props.onClick(data)} oneSki={this.props.oneSki}/>);
         } else {
           typeOfTrick += 1;
         }
@@ -132,6 +133,7 @@ class Application extends React.Component {
           toes={this.state.toes}
           flips={this.state.flips}
           skilines={this.state.skilines}
+          oneSki={this.state.oneSki}
           />
         </div>
       </div>
