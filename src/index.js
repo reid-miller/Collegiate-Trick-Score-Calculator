@@ -37,7 +37,7 @@ class TrickList extends React.Component {
         trick = trick.split(" ");
         elements[typeOfTrick].push(<Trick name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
         trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]} 
-        onClick={(data) => this.props.onClick(data)} oneSki={this.props.oneSki}/>);
+        onClick={(data) => this.props.onClick(data)} oneSki={this.props.oneSki} wake={this.props.wake}/>);
         } else {
           typeOfTrick += 1;
         }
@@ -62,6 +62,7 @@ class Application extends React.Component {
     this.state = {
       score: 0,
       oneSki : true,
+      wake: false,
 
       tricks: [{
         spins: Array(9).fill(null),
@@ -75,8 +76,16 @@ class Application extends React.Component {
 
   // Update score
   handleClick(i) {
-    console.log(i);
+    
+    if(i === "%") {
+      alert("You cant do that");
+    } else {
     this.setState({ score: parseInt(this.state.score, 10) + parseInt(i, 10) })
+    }
+  }
+
+  switchWake(){
+    this.setState({wake: !this.state.wake})
   }
 
   switchSki() {
@@ -123,6 +132,7 @@ class Application extends React.Component {
         <button onClick={() => this.reset()}>Reset</button>
         <div>You are on {this.state.oneSki ? "one ski" : "two skis"}</div>
         <button onClick={() => this.switchSki()}>Switch Ski</button>
+        <button onClick={() => this.switchWake()}>{this.state.wake ? "Surface" : "Wake"}</button>
         </div>
 
         <div>
@@ -134,6 +144,7 @@ class Application extends React.Component {
           flips={this.state.flips}
           skilines={this.state.skilines}
           oneSki={this.state.oneSki}
+          wake={this.state.wake}
           />
         </div>
       </div>
