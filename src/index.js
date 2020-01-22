@@ -63,6 +63,7 @@ class Application extends React.Component {
       score: 0,
       oneSki : true,
       wake: false,
+      front: true,
 
       tricks: [{
         spins: Array(9).fill(null),
@@ -127,7 +128,7 @@ class Application extends React.Component {
       <div className="application">
         <h1 className="text-center">Trick Calculator</h1>
         <div className="text-center">{score}</div>
-
+        <div>{this.state.front ? "Front" : "Back"}</div>
         <div className="text-center">
         <button onClick={() => this.reset()}>Reset</button>
         <div>You are on {this.state.oneSki ? "one ski" : "two skis"}</div>
