@@ -10,11 +10,6 @@ import Trick from './Trick'
 
 class TrickList extends React.Component {
 
-  handleClick(points) {
-    console.log(points);
-    this.props.onClick(this.props.name);
-  }
-
   render() {
     //Create trick buttons and components
     var arr=trickListText.split("\n");
@@ -37,7 +32,7 @@ class TrickList extends React.Component {
         trick = trick.split(" ");
         elements[typeOfTrick].push(<Trick name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
         trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]} 
-        onClick={(data) => this.props.onClick(data)} oneSki={this.props.oneSki} wake={this.props.wake}/>);
+        onClick={(data, front) => this.props.onClick(data, front)} oneSki={this.props.oneSki} wake={this.props.wake} front={this.props.front}/>);
         } else {
           typeOfTrick += 1;
         }
@@ -76,12 +71,15 @@ class Application extends React.Component {
   }
 
   // Update score
-  handleClick(i) {
+  handleClick(score, front) {
     
-    if(i === "%") {
+    if(score === "%") {
       alert("You cant do that");
     } else {
-    this.setState({ score: parseInt(this.state.score, 10) + parseInt(i, 10) })
+      console.log(front);
+    this.setState({ score: parseInt(this.state.score, 10) + parseInt(score, 10),
+                    front: front
+                  })
     }
   }
 
@@ -119,7 +117,8 @@ class Application extends React.Component {
   }
   //Reset score
   reset() {
-    this.setState({score: 0}); // Reset Score
+    this.setState({score: 0, front: true}); // Reset Score
+    
   }
 
   render() {
@@ -138,7 +137,7 @@ class Application extends React.Component {
 
         <div>
           <TrickList 
-          onClick={(i) => this.handleClick(i)}
+          onClick={(i, k) => this.handleClick(i, k)}
           spins={this.state.spins}
           stepovers={this.state.stepovers}
           toes={this.state.toes}
@@ -146,6 +145,7 @@ class Application extends React.Component {
           skilines={this.state.skilines}
           oneSki={this.state.oneSki}
           wake={this.state.wake}
+          front={this.state.front}
           />
         </div>
       </div>
