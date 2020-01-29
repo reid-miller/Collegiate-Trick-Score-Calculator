@@ -1,11 +1,11 @@
 import React from 'react';
 
 class Trick extends React.Component {
-    
   render() {
       var name = this.props.name;
       var score;
       var front = this.props.front; //Will be sent back up as vakue it should be after button is pressed
+      var trick = this.props.trick;
 
       if(name.includes("FF") && !front) {
         if(!front) {
@@ -20,7 +20,6 @@ class Trick extends React.Component {
       } else if(name.includes("BF")) {
         if(front) {
           name = "NO"
-          console.log(name + "Rats");
         } else {
           front = true;
         }
@@ -29,7 +28,6 @@ class Trick extends React.Component {
           name = "NO"
         }
       }
-
 
       //If the trick does not need wake added to it ever then we do nothing
       if(this.props.trickCode === "%" || this.props.trickCode === "S" || this.props.trickCode === "TS") {
@@ -46,7 +44,7 @@ class Trick extends React.Component {
         score = this.props.oneSki ? this.props.score1Ski : this.props.score2Ski;
       }
         return (
-          <button onClick={() => {this.props.onClick(score, front)}}> {name} </button>
+          <button onClick={() => {this.props.onClick(score, front, trick)}}> {name} </button>
         );
       }
 }

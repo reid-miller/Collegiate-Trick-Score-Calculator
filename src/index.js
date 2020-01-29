@@ -32,7 +32,7 @@ class TrickList extends React.Component {
         trick = trick.split(" ");
         elements[typeOfTrick].push(<Trick name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
         trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]} 
-        onClick={(data, front) => this.props.onClick(data, front)} oneSki={this.props.oneSki} wake={this.props.wake} front={this.props.front}/>);
+        onClick={(data, front, trick) => this.props.onClick(data, front, trick)} oneSki={this.props.oneSki} wake={this.props.wake} front={this.props.front} trick={i}/>);
         } else {
           typeOfTrick += 1;
         }
@@ -59,29 +59,30 @@ class Application extends React.Component {
       oneSki : true,
       wake: false,
       front: true,
-
-      tricks: [{
-        spins: Array(9).fill(null),
-        stepovers: Array(9).fill(null),
-        toes: Array(9).fill(null),
-        flips: Array(9).fill(null),
-        skilines: Array(9).fill(null),
-      }],
+      done: Array(60).fill(false),
+      doneRev: Array(60).fill(false),
     }
   }
 
   // Update score
-  handleClick(score, front) {
+  handleClick(score, front, trick) {
     
+    //Check if the trick has been done
+    const done = this.state.done;
+    if(done[trick]) {
+      alert("Trick has already been done");
+    } else {
     if(score === "%") {
       alert("You cant do that");
     } else {
-      console.log(front);
+      done[trick] = true;
     this.setState({ score: parseInt(this.state.score, 10) + parseInt(score, 10),
-                    front: front
+                    front: front,
+                    done: done,
                   })
     }
   }
+}
 
   switchWake(){
     this.setState({wake: !this.state.wake})
@@ -117,7 +118,7 @@ class Application extends React.Component {
   }
   //Reset score
   reset() {
-    this.setState({score: 0, front: true}); // Reset Score
+    this.setState({score: 0, front: true, done: Array(60).fill(false)}); // Reset Score
     
   }
 
@@ -137,7 +138,7 @@ class Application extends React.Component {
 
         <div>
           <TrickList 
-          onClick={(i, k) => this.handleClick(i, k)}
+          onClick={(score, front, trick) => this.handleClick(score, front, trick)}
           spins={this.state.spins}
           stepovers={this.state.stepovers}
           toes={this.state.toes}
