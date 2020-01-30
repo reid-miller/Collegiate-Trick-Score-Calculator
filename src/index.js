@@ -32,7 +32,7 @@ class TrickList extends React.Component {
         trick = trick.split(" ");
         elements[typeOfTrick].push(<Trick name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
         trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]} 
-        onClick={(data, front, trick) => this.props.onClick(data, front, trick)} oneSki={this.props.oneSki} wake={this.props.wake} front={this.props.front} trick={i}/>);
+        onClick={(data, front, trick, reverse) => this.props.onClick(data, front, trick, reverse)} oneSki={this.props.oneSki} wake={this.props.wake} front={this.props.front} trick={i} lastTrick={this.props.lastTrick}/>);
         } else {
           typeOfTrick += 1;
         }
@@ -61,28 +61,48 @@ class Application extends React.Component {
       front: true,
       done: Array(60).fill(false),
       doneRev: Array(60).fill(false),
+      lastTrick: null,
     }
   }
 
   // Update score
-  handleClick(score, front, trick) {
+  handleClick(score, front, trick, reverse) {
     
     //Check if the trick has been done
     const done = this.state.done;
-    if(done[trick]) {
+    const doneRev= this.state.doneRev;
+
+    if(reverse) {
+      if(done[trick]) {
+        alert("Trick has already been done");
+      } else {
+      if(score === "%") {
+        alert("You cant do that");
+      } else {
+        done[trick] = true;
+      }
+    }
+  }
+  else {
+    //trick = null; //So it does not thinks it's another reverse
+    if(doneRev[trick]) {
       alert("Trick has already been done");
     } else {
     if(score === "%") {
       alert("You cant do that");
     } else {
-      done[trick] = true;
-    this.setState({ score: parseInt(this.state.score, 10) + parseInt(score, 10),
-                    front: front,
-                    done: done,
-                  })
+      doneRev[trick] = true;
     }
   }
 }
+
+    this.setState({ score: parseInt(this.state.score, 10) + parseInt(score, 10),
+      front: front,
+      done: done,
+      doneRev: doneRev,
+      lastTrick: trick,
+    })
+  }
 
   switchWake(){
     this.setState({wake: !this.state.wake})
@@ -118,7 +138,7 @@ class Application extends React.Component {
   }
   //Reset score
   reset() {
-    this.setState({score: 0, front: true, done: Array(60).fill(false)}); // Reset Score
+    this.setState({score: 0, front: true, done: Array(60).fill(false), doneRev: Array(60).fill(false)}); // Reset Score
     
   }
 
@@ -138,7 +158,7 @@ class Application extends React.Component {
 
         <div>
           <TrickList 
-          onClick={(score, front, trick) => this.handleClick(score, front, trick)}
+          onClick={(score, front, trick, reverse) => this.handleClick(score, front, trick, reverse)}
           spins={this.state.spins}
           stepovers={this.state.stepovers}
           toes={this.state.toes}
@@ -147,6 +167,7 @@ class Application extends React.Component {
           oneSki={this.state.oneSki}
           wake={this.state.wake}
           front={this.state.front}
+          lastTrick={this.state.lastTrick}
           />
         </div>
       </div>

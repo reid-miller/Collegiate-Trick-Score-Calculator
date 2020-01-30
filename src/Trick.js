@@ -6,6 +6,12 @@ class Trick extends React.Component {
       var score;
       var front = this.props.front; //Will be sent back up as vakue it should be after button is pressed
       var trick = this.props.trick;
+      var reverse = false;
+
+      if(this.props.lastTrick === trick) {
+        name = "Reverse " + name;
+        reverse = true;
+      }
 
       if(name.includes("FF") && !front) {
         if(!front) {
@@ -44,7 +50,7 @@ class Trick extends React.Component {
         score = this.props.oneSki ? this.props.score1Ski : this.props.score2Ski;
       }
         return (
-          <button onClick={() => {this.props.onClick(score, front, trick)}}> {name} </button>
+          <button onClick={() => {this.props.onClick(score, front, trick, reverse)}}> {name} </button>
         );
       }
 }
