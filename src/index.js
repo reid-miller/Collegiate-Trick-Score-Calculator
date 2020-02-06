@@ -78,6 +78,7 @@ class Application extends React.Component {
       } else {
       if(score === "%") {
         alert("You cant do that");
+        return;
       } else {
         done[trick] = true;
       }
@@ -90,6 +91,7 @@ class Application extends React.Component {
     } else {
     if(score === "%") {
       alert("You cant do that");
+      return;
     } else {
       doneRev[trick] = true;
     }
@@ -144,6 +146,7 @@ class Application extends React.Component {
 
   render() {
     const score = this.state.score;
+    // <img src={require('./trickski.jpg')} height="150px" width="150px" alt="dwq"/> to add photo
     return (
       <div className="application">
         <h1 className="text-center">Trick Calculator</h1>

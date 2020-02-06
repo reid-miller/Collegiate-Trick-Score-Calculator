@@ -3,6 +3,7 @@ import React from 'react';
 class Trick extends React.Component {
   render() {
       var name = this.props.name;
+      var greyOut = false;
       var score;
       var front = this.props.front; //Will be sent back up as vakue it should be after button is pressed
       var trick = this.props.trick;
@@ -15,23 +16,23 @@ class Trick extends React.Component {
 
       if(name.includes("FF") && !front) {
         if(!front) {
-          name = "NO"
+          greyOut = true;
         }
       } else if(name.includes("FB")){
         if(front) {
           front = false;
         } else {
-          name = "NO"
+          greyOut = true;
         }
       } else if(name.includes("BF")) {
         if(front) {
-          name = "NO"
+          greyOut = true;
         } else {
           front = true;
         }
       } else if(name.includes("BB")) {
         if(front) {
-          name = "NO"
+          greyOut = true;
         }
       }
 
@@ -49,10 +50,17 @@ class Trick extends React.Component {
       } else {
         score = this.props.oneSki ? this.props.score1Ski : this.props.score2Ski;
       }
+
+      if(greyOut) {
+        return (
+          <button disabled> {name} </button>
+        );
+      } else {
         return (
           <button onClick={() => {this.props.onClick(score, front, trick, reverse)}}> {name} </button>
         );
       }
+    }
 }
 
 export default Trick;
