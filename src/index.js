@@ -73,10 +73,6 @@ class Application extends React.Component {
     for(var i = 0; i < createDone.length; i++) {
       createDone[i] = [false, false, false, false];
     }
-
-    console.log("RR");
-    console.log(this.state.tricks);
-    console.log("RR");
   }
 /*
   // Update score
@@ -158,13 +154,20 @@ class Application extends React.Component {
   //Called when enter is pressed in the input field
   handleSubmit(trickCode) {
 
+    var lastTrick = this.state.lastTrick;
     var wake = false;
     var reverse = 0; // 0 if normal, 1 if reverse 
     var ski; // Based off what type of ski they are on
-    
-    // Find the related trick
     var tricks = this.state.tricks;
     var trick = null;
+    
+    // Check if reverse
+    if(trickCode.charAt(0) === 'R') {
+      reverse = 1;
+      trickCode = trickCode.substring(1);
+    }
+
+    // Find the related trick
     for (var i = 0; i < tricks.length; i++) {
       for (var j = 0; j < tricks[i].length; j++) {
         if(tricks[i][j].trickCode === trickCode) {
@@ -187,8 +190,6 @@ class Application extends React.Component {
     const done = this.state.done; // 0 is normal, 1 is reverse, 2 is wake, 3 is wake reverse
     var toAdd = 0; // Amount to add to score
 
-    console.log(done);
-
     if(wake) {
       if(done[trick.trick][2 + reverse] === false) {
         done[trick.trick][2] = true;
@@ -201,9 +202,10 @@ class Application extends React.Component {
       }
     }
 
-    console.log("toAdd =" + toAdd);
+    // Set scores and states
+    lastTrick = trick;
     this.score(toAdd);
-    this.setState({done: done});
+    this.setState({done: done, lastTrick: lastTrick,});
   }
  
   //Add to score

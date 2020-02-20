@@ -14,7 +14,8 @@ class InputField extends React.Component {
     }
   
     handleSubmit(event) {
-      this.props.onSubmit(this.state.value);
+      this.props.onSubmit(this.state.value.toUpperCase().trim());
+
       event.preventDefault();
     }
   
