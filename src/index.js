@@ -14,30 +14,30 @@ class TrickList extends React.Component {
 
   render() {
     //Create trick buttons and components
-    var arr=trickListText.split("\n");
-    var spins=[];
-    var stepovers=[];
-    var toes=[];
-    var flips=[];
-    var skilines=[];
-    var elements=[spins, stepovers, toes, flips, skilines];
+    var arr = trickListText.split("\n");
+    var spins = [];
+    var stepovers = [];
+    var toes = [];
+    var flips = [];
+    var skilines = [];
+    var elements = [spins, stepovers, toes, flips, skilines];
     // push the component to elements
 
     var typeOfTrick = 0;
-    for(var i=0;i<arr.length;i++){
-        var trick = arr[i]; // String of trick with name and score
+    for (var i = 0; i < arr.length; i++) {
+      var trick = arr[i]; // String of trick with name and score
 
-        if(trick !== "@") {
+      if (trick !== "@") {
         //name of element
-        var name = trick.substring(0, trick.indexOf("-")-1);
+        var name = trick.substring(0, trick.indexOf("-") - 1);
         trick = trick.substring(trick.indexOf("-") + 2, trick.length); // Cut off info we already have
         trick = trick.split(" ");
-        elements[typeOfTrick].push(<Trick name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
-        trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]} 
-        onClick={(data, front, trick, reverse) => this.props.onClick(data, front, trick, reverse)} oneSki={this.props.oneSki} wake={this.props.wake} front={this.props.front} trick={i} lastTrick={this.props.lastTrick}/>);
-        } else {
-          typeOfTrick += 1;
-        }
+        elements[typeOfTrick].push(<Trick name={name} trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
+          trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]}
+          onClick={(data, front, trick, reverse) => this.props.onClick(data, front, trick, reverse)} oneSki={this.props.oneSki} wake={this.props.wake} front={this.props.front} trick={i} lastTrick={this.props.lastTrick} />);
+      } else {
+        typeOfTrick += 1;
+      }
     }
     console.log(elements);
     return (
@@ -59,63 +59,18 @@ class Application extends React.Component {
     super(props);
     this.state = {
       score: 0,
-      oneSki : true,
+      oneSki: true,
       wake: false,
       front: true,
-      done: Array(60), // 0 is normal, 1 is reverse, 2 is wake, 3 is wake reverse
-      lastTrick: null,
+      tricks_done: [],
       value: '',
       tricks: this.setUp(),
-    }
-
-    var createDone = this.state.done;
-
-    for(var i = 0; i < createDone.length; i++) {
-      createDone[i] = [false, false, false, false];
+      message: "",
     }
   }
-/*
-  // Update score
-  handleClick(score, front, trick, reverse) {
-    
-    
 
-    if(reverse) {
-      if(done[trick]) {
-        alert("Trick has already been done");
-      } else {
-      if(score === "%") {
-        alert("You cant do that");
-        return;
-      } else {
-        done[trick] = true;
-      }
-    }
-  }
-  else {
-    //trick = null; //So it does not thinks it's another reverse
-    if(doneRev[trick]) {
-      alert("Trick has already been done");
-    } else {
-    if(score === "%") {
-      alert("You cant do that");
-      return;
-    } else {
-      doneRev[trick] = true;
-    }
-  }
-}
-
-    this.setState({ score: parseInt(this.state.score, 10) + parseInt(score, 10),
-      front: front,
-      done: done,
-      doneRev: doneRev,
-      lastTrick: trick,
-    })
-  }
-*/
-  switchWake(){
-    this.setState({wake: !this.state.wake})
+  switchWake() {
+    this.setState({ wake: !this.state.wake })
   }
 
   switchSki() {
@@ -127,11 +82,11 @@ class Application extends React.Component {
       buttons: [
         {
           label: 'One Ski',
-          onClick: () => this.setState({oneSki: true})
+          onClick: () => this.setState({ oneSki: true })
         },
         {
           label: 'Two Ski',
-          onClick: () => this.setState({oneSki: false})
+          onClick: () => alert("Sorry can't do that just yet!")
         },
         {
           label: 'Wake Board',
@@ -148,29 +103,52 @@ class Application extends React.Component {
   }
   //Reset score
   reset() {
-    this.setState({score: 0, front: true, done: Array(60).fill(false), doneRev: Array(60).fill(false)}); // Reset Score   
+    this.setState({ score: 0, front: true, tricks_done: [], }); // Reset Score   
+  }
+
+  // Determines what direction you need to be to start a trick and what direction
+  // you'll be after the trick. Returns start postion followed by end ex: FF, FB, BF, BB
+  positon(trickCode) {
+
+    // Tricks you must be front for
+    if (!trickCode.includes("BB") && (trickCode.includes("S") || trickCode.includes("B") || trickCode.includes("FB") || trickCode.includes("FF") || trickCode.includes("O"))) {
+
+      if (trickCode.includes("O") || trickCode.includes("FF") || trickCode.includes("S"))
+        return "FF";
+      else
+        return "FB"
+
+    }
+    // Tricks you must be back for
+    else {
+      if (trickCode.includes("BB"))
+        return "BB";
+      else
+        return "BF";
+    }
   }
 
   //Called when enter is pressed in the input field
   handleSubmit(trickCode) {
 
-    var lastTrick = this.state.lastTrick;
     var wake = false;
-    var reverse = 0; // 0 if normal, 1 if reverse 
+    var reverse = false;
     var ski; // Based off what type of ski they are on
     var tricks = this.state.tricks;
     var trick = null;
-    
+    var front = this.state.front;
+    var message = "";
+
     // Check if reverse
-    if(trickCode.charAt(0) === 'R') {
-      reverse = 1;
+    if (trickCode.charAt(0) === 'R') {
+      reverse = true;
       trickCode = trickCode.substring(1);
     }
 
     // Find the related trick
     for (var i = 0; i < tricks.length; i++) {
       for (var j = 0; j < tricks[i].length; j++) {
-        if(tricks[i][j].trickCode === trickCode) {
+        if (tricks[i][j].trickCode === trickCode) {
           trick = tricks[i][j];
           break;
         } else if (tricks[i][j].trickWakeCode === trickCode) {
@@ -182,55 +160,67 @@ class Application extends React.Component {
 
     // If we did not find the trick
     if (trick === null) {
-      console.log("Trick not found");
+      this.setState({message: "Trick not found"});
       return;
     }
-        
-    //Check if the trick has been done
-    const done = this.state.done; // 0 is normal, 1 is reverse, 2 is wake, 3 is wake reverse
+
+    // Check if we can legally do this trick ex: Trying to do a B while already back is imposible
+    var postion = this.positon(trickCode);
+    var startPosition = postion.charAt(0) === "F"; // Front === True
+    var endPosition =  postion.charAt(1) === "F"; // Front === True
+
+    if(front !== startPosition) {
+      this.setState({message: "Can't do that, facing wrong direction!"});
+      return;
+    } 
+    else
+      front = endPosition;
+
+
+
+    //Check if the trick has been done and check the amount to add to the score
+    const tricks_done = this.state.tricks_done;
     var toAdd = 0; // Amount to add to score
 
-    if(wake) {
-      if(done[trick.trick][2 + reverse] === false) {
-        done[trick.trick][2] = true;
-        toAdd = trick.scoreWake1Ski;
-      }
+    if (tricks_done.includes(trickCode)) {
+      message = "Trick already done! No points.";
     } else {
-      if(done[trick.trick][0 + reverse] === false) {
-        done[trick.trick][0 + reverse] = true;
+      if (wake)
+        toAdd = trick.scoreWake1Ski;
+      else
         toAdd = trick.score1Ski;
-      }
     }
 
+
     // Set scores and states
-    lastTrick = trick;
+    tricks_done.push(trickCode);
     this.score(toAdd);
-    this.setState({done: done, lastTrick: lastTrick,});
+    this.setState({ tricks_done: tricks_done, front: front, message: message, });
   }
- 
+
   //Add to score
   score(amount) {
-    this.setState({ score: parseInt(this.state.score, 10) + parseInt(amount, 10)});
+    this.setState({ score: parseInt(this.state.score, 10) + parseInt(amount, 10) });
   }
 
   setUp() {
     //Create trick buttons and components
-    var arr=trickListText.split("\n");
-    var spins=[];
-    var stepovers=[];
-    var toes=[];
-    var flips=[];
-    var skilines=[];
-    var elements=[spins, stepovers, toes, flips, skilines];
+    var arr = trickListText.split("\n");
+    var spins = [];
+    var stepovers = [];
+    var toes = [];
+    var flips = [];
+    var skilines = [];
+    var elements = [spins, stepovers, toes, flips, skilines];
 
     // push the component to elements
     var typeOfTrick = 0;
-    for(var i=0;i<arr.length;i++){
-        var trick = arr[i]; // String of trick with name and score
+    for (var i = 0; i < arr.length; i++) {
+      var trick = arr[i]; // String of trick with name and score
 
-        if(trick !== "@") {
+      if (trick !== "@") {
         //name of element
-        var name = trick.substring(0, trick.indexOf("-")-1);
+        var name = trick.substring(0, trick.indexOf("-") - 1);
         trick = trick.substring(trick.indexOf("-") + 2, trick.length); // Cut off info we already have
         trick = trick.split(" ");
 
@@ -249,35 +239,45 @@ class Application extends React.Component {
         elements[typeOfTrick].push(<Trick name={ name } trickCode={trick[0]} score2Ski={trick[1]} score1Ski={trick[2]}
         trickWakeCode={trick[3]} scoreWake2Ski={trick[4]} scoreWake1Ski={trick[5]} 
         onClick={(data, front, trick, reverse) => this.props.onClick(data, front, trick, reverse)} oneSki={this.props.oneSki} wake={this.props.wake} front={this.props.front} trick={i} lastTrick={this.props.lastTrick}/>);*/
-        } else {
-          typeOfTrick += 1;
-        }
+      } else {
+        typeOfTrick += 1;
+      }
     }
     return elements;
   }
 
   render() {
     const score = this.state.score;
+    const message = this.state.message;
+    console.log(message);
     // <img src={require('./trickski.jpg')} height="150px" width="150px" alt="dwq"/> to add photo
+    // Wake button:           <button onClick={() => this.switchWake()}>{this.state.wake ? "Surface" : "Wake"}</button>
+
     return (
       <div className="application">
+        <div className="text-center">
         <h1 className="text-center">Trick Calculator</h1>
         <div className="text-center">{score}</div>
         <div>{this.state.front ? "Front" : "Back"}</div>
         <div className="text-center">
-        <button onClick={() => this.reset()}>Reset</button>
-        <div>You are on {this.state.oneSki ? "one ski" : "two skis"}</div>
-        <button onClick={() => this.switchSki()}>Switch Ski</button>
-        <button onClick={() => this.switchWake()}>{this.state.wake ? "Surface" : "Wake"}</button>
+          <button onClick={() => this.reset()}>Reset</button>
+          <div>You are on {this.state.oneSki ? "one ski" : "two skis"}</div>
+          <button onClick={() => this.switchSki()}>Switch Ski</button>
         </div>
-
+        <br/>
+        <p>{message}</p>
         <InputField
-        onSubmit={(trickCode) => this.handleSubmit(trickCode)}
+          onSubmit={(trickCode) => this.handleSubmit(trickCode)}
         />
 
+        <div>
+          {this.state.tricks_done.map(txt => <p>{txt}</p>)}
+        </div>
+      </div>
       </div>
     );
   }
+
 }
 
 /*
