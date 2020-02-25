@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Collegiate-Trick-Score-Calculator/precache-manifest.81975c9c48a6302fa9a12b3f74c93fd3.js"
+  "/Collegiate-Trick-Score-Calculator/precache-manifest.60ecac227afc86ca83bc5e77e5de0e08.js"
 );
 
 self.addEventListener('message', (event) => {
