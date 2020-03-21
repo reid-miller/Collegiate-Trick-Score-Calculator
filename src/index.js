@@ -128,6 +128,28 @@ class Application extends React.Component {
     }
   }
 
+  // Finds trick info based off trick code
+  findTrick(trickCode) {
+    var tricks = this.state.tricks;
+    var trick = null; 
+    var wake = false;
+    // Find the related trick
+    for (var i = 0; i < tricks.length; i++) {
+      for (var j = 0; j < tricks[i].length; j++) {
+        if (tricks[i][j].trickCode === trickCode) {
+          trick = tricks[i][j];
+          break;
+          } 
+        else if (tricks[i][j].trickWakeCode === trickCode) {
+          wake = true;
+          trick = tricks[i][j];
+        }
+      }
+    }
+
+   return [trick, wake];
+  }
+
   //Called when enter is pressed in the input field
   handleSubmit(trickCode) {
 
@@ -142,21 +164,37 @@ class Application extends React.Component {
     // Check if reverse
     if (trickCode.charAt(0) === 'R') {
       reverse = true;
-      trickCode = trickCode.substring(1);
-    }
+        if(trickCode === 'R') {
+          // If it's just R than try pulling the other tricks
 
-    // Find the related trick
-    for (var i = 0; i < tricks.length; i++) {
-      for (var j = 0; j < tricks[i].length; j++) {
-        if (tricks[i][j].trickCode === trickCode) {
-          trick = tricks[i][j];
-          break;
-        } else if (tricks[i][j].trickWakeCode === trickCode) {
-          wake = true;
-          trick = tricks[i][j];
+          // Try doing the last trick
+          if(this.state.tricks_done.length - 1 < 0) {alert("This needs to be fixed")}
+          var lastTrick = this.state.tricks_done[this.state.tricks_done.length - 1];
+          if((front === true && this.positon(lastTrick).charAt(0) === 'F') || (front === false && this.positon(lastTrick).charAt(0) === 'B')) {
+            // Set trick code to last trick
+            trickCode = lastTrick;
+            console.log("This is last trick: " + trickCode)
+
+          }
+          // If that does not work try doing the reverse of the 2nd to last trick trick
+          else {
+          if(this.state.tricks_done.length - 2 < 0) {alert("This needs to be fixed")}
+          lastTrick = this.state.tricks_done[this.state.tricks_done.length - 2];
+          if((front === true && this.positon(lastTrick).charAt(0) === 'F') || (front === false && this.positon(lastTrick).charAt(0) === 'B')) {
+            // Set trick code to last trick
+            trickCode = lastTrick;
+            console.log("This is last trick: " + trickCode)
+
+          }
         }
       }
+        //trickCode = trickCode.substring(1);
     }
+
+    console.log(trickCode);
+    var result = this.findTrick(trickCode);
+    trick = result[0];
+    wake = result[1];
 
     // If we did not find the trick
     if (trick === null) {
@@ -181,6 +219,10 @@ class Application extends React.Component {
     //Check if the trick has been done and check the amount to add to the score
     const tricks_done = this.state.tricks_done;
     var toAdd = 0; // Amount to add to score
+
+    if (reverse) {
+      trickCode = 'R' + trickCode;
+    }
 
     if (tricks_done.includes(trickCode)) {
       message = "Trick already done! No points.";
