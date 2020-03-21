@@ -66,6 +66,7 @@ class Application extends React.Component {
       value: '',
       tricks: this.setUp(),
       message: "",
+      visual_trick_list: [],
     }
   }
 
@@ -235,6 +236,9 @@ class Application extends React.Component {
 
 
     // Set scores and states
+    var visual_list = this.state.visual_trick_list;
+    var name = (reverse) ? 'Reverse ' + trick.name : trick.name; 
+    visual_list.push([name, trickCode, toAdd]);
     tricks_done.push(trickCode);
     this.score(toAdd);
     this.setState({ tricks_done: tricks_done, front: front, message: message, });
@@ -300,7 +304,6 @@ class Application extends React.Component {
         <div className="text-center">
         <h1 className="text-center">Trick Calculator</h1>
         <div className="text-center">{score}</div>
-        <div>{this.state.front ? "Front" : "Back"}</div>
         <div className="text-center">
           <button onClick={() => this.reset()}>Reset</button>
           <div>You are on {this.state.oneSki ? "one ski" : "two skis"}</div>
@@ -312,10 +315,21 @@ class Application extends React.Component {
           onSubmit={(trickCode) => this.handleSubmit(trickCode)}
         />
 
-        <div>
-          {this.state.tricks_done.map(txt => <p>{txt}</p>)}
-        </div>
-      </div>
+          <div>Current Position: <strong>{this.state.front ? "Front" : "Back"}</strong></div>
+          
+          <div class="row d-flex justify-content-center table-responsive">
+          <table id="trick-table" class="table w-75">
+            <tr>
+              <th>Name</th>
+              <th>Code</th>
+              <th>Points</th>
+            </tr>
+          {this.state.visual_trick_list.map(txt => <tr><td>{txt[0]}</td><td>{txt[1]}</td><td>{txt[2]}</td></tr>)}
+          </table>
+          </div>
+          </div>
+
+      
       </div>
     );
   }
@@ -338,6 +352,9 @@ class Application extends React.Component {
           lastTrick={this.state.lastTrick}
           />
         </div>
+
+                  <img src={image} class="img-fluid" alt="Forward facing trick skier" height="20%" width="20%"/>
+
 
 */
 

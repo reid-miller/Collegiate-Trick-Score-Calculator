@@ -18,6 +18,10 @@ class InputField extends React.Component {
 
 
       event.preventDefault();
+      this.setState({value: "",})
+      //var scrollableTable = document.getElementById("trick-table");
+      //scrollableTable.scrollTop = scrollableTable.scrollHeight;
+      //console.log(scrollableTable);
     }
   
     render() {
