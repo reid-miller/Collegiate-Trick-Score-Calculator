@@ -104,7 +104,9 @@ class Application extends React.Component {
   }
   //Reset score
   reset() {
-    this.setState({ score: 0, front: true, tricks_done: [], visual_trick_list: [], message: "Trick Run Reset"}); // Reset Score   
+    // Set what ski they are riding on (visualy)
+    var ski = this.state.oneSki ? "one ski" : "two skis";
+    this.setState({ score: 0, front: true, tricks_done: [], visual_trick_list: [], message: "Trick run reset: You are riding on " + ski}); // Reset Score   
   }
 
   // Determines what direction you need to be to start a trick and what direction
@@ -160,7 +162,7 @@ class Application extends React.Component {
     var tricks = this.state.tricks;
     var trick = null;
     var front = this.state.front;
-    var message = "";
+    var message = null;
 
     // Check if reverse
     if (trickCode.charAt(0) === 'R') {
@@ -232,7 +234,6 @@ class Application extends React.Component {
       else
         toAdd = trick.score1Ski;
     }
-
 
     // Set scores and states
     var visual_list = this.state.visual_trick_list;
@@ -314,17 +315,15 @@ class Application extends React.Component {
     // Wake button:           <button onClick={() => this.switchWake()}>{this.state.wake ? "Surface" : "Wake"}</button>
 
     return (
+      <body>
       <div className="application">
         <div className="text-center">
-        <h1 className="text-center">Trick Calculator</h1>
-        <div className="text-center">{score}</div>
+        <h1 className="text-center display-4">Trick Calculator</h1>
+        <div className="text-center display-4">{score}</div>
         <div className="text-center">
-          <button onClick={() => this.reset()}>Reset</button>
-          <div>You are on {this.state.oneSki ? "one ski" : "two skis"}</div>
-          <button onClick={() => this.switchSki()}>Switch Ski</button>
         </div>
         <br/>
-        <p>{message}</p>
+        <div><p>{message}</p></div>
         <InputField
           onSubmit={(trickCode) => this.handleSubmit(trickCode)}
         />
@@ -345,10 +344,22 @@ class Application extends React.Component {
           </div>
           </table>
           </div>
+
+          <div>
+              <button onClick={() => this.reset()}>Reset</button>
+          </div>
+          <br />
+
+          </div>
           </div>
 
-      
-      </div>
+          <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+            <div class="container text-center">
+              <small><p>Switch Ski | How to Use | USA Water Ski</p></small>
+              <small>Made by <a rel="noopener noreferrer" target="_blank" href="http://reidhub.com">Reid Miler</a></small>
+            </div>
+          </footer>
+      </body>
     );
   }
 

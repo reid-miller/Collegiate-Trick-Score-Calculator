@@ -5,5 +5,21 @@
 
 .table-responsive {
     max-height:300px;
+    height: 300px;
     overflow: auto;
+}
+
+#sticky-footer {
+    flex-shrink: 0;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+  }
+
+#messages {
+    min-height: 1%;
 }
