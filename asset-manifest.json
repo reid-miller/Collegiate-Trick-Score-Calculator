@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/Collegiate-Trick-Score-Calculator/static/css/main.9d7b912e.chunk.css",
-    "main.js": "/Collegiate-Trick-Score-Calculator/static/js/main.e8199959.chunk.js",
-    "main.js.map": "/Collegiate-Trick-Score-Calculator/static/js/main.e8199959.chunk.js.map",
+    "main.css": "/Collegiate-Trick-Score-Calculator/static/css/main.8ff0610c.chunk.css",
+    "main.js": "/Collegiate-Trick-Score-Calculator/static/js/main.ad017c49.chunk.js",
+    "main.js.map": "/Collegiate-Trick-Score-Calculator/static/js/main.ad017c49.chunk.js.map",
     "runtime-main.js": "/Collegiate-Trick-Score-Calculator/static/js/runtime-main.e91d390a.js",
     "runtime-main.js.map": "/Collegiate-Trick-Score-Calculator/static/js/runtime-main.e91d390a.js.map",
     "static/css/2.593285ce.chunk.css": "/Collegiate-Trick-Score-Calculator/static/css/2.593285ce.chunk.css",
     "static/js/2.27658abc.chunk.js": "/Collegiate-Trick-Score-Calculator/static/js/2.27658abc.chunk.js",
     "static/js/2.27658abc.chunk.js.map": "/Collegiate-Trick-Score-Calculator/static/js/2.27658abc.chunk.js.map",
     "index.html": "/Collegiate-Trick-Score-Calculator/index.html",
-    "precache-manifest.71830e8259a373caf1d4964487cdf034.js": "/Collegiate-Trick-Score-Calculator/precache-manifest.71830e8259a373caf1d4964487cdf034.js",
+    "precache-manifest.307664bb868c542b52f058cbb7adea0b.js": "/Collegiate-Trick-Score-Calculator/precache-manifest.307664bb868c542b52f058cbb7adea0b.js",
     "service-worker.js": "/Collegiate-Trick-Score-Calculator/service-worker.js",
     "static/css/2.593285ce.chunk.css.map": "/Collegiate-Trick-Score-Calculator/static/css/2.593285ce.chunk.css.map",
-    "static/css/main.9d7b912e.chunk.css.map": "/Collegiate-Trick-Score-Calculator/static/css/main.9d7b912e.chunk.css.map"
+    "static/css/main.8ff0610c.chunk.css.map": "/Collegiate-Trick-Score-Calculator/static/css/main.8ff0610c.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.e91d390a.js",
     "static/css/2.593285ce.chunk.css",
     "static/js/2.27658abc.chunk.js",
-    "static/css/main.9d7b912e.chunk.css",
-    "static/js/main.e8199959.chunk.js"
+    "static/css/main.8ff0610c.chunk.css",
+    "static/js/main.ad017c49.chunk.js"
   ]
 }
