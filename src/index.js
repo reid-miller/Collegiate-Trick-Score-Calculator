@@ -204,9 +204,8 @@ class Application extends React.Component {
     }
 
     // Check if we can legally do this trick ex: Trying to do a B while already back is imposible
-    var postion = this.positon(trickCode);
-    var startPosition = postion.charAt(0) === "F"; // Front === True
-    var endPosition =  postion.charAt(1) === "F"; // Front === True
+    var startPosition = trick.start === "F"; // Front === True
+    var endPosition =  trick.end === "F"; // Front === True
 
     if(front !== startPosition) {
       this.setState({message: "Can't do that, facing wrong direction!"});
@@ -279,6 +278,8 @@ class Application extends React.Component {
           scoreWake2Ski: trick[4],
           scoreWake1Ski: trick[5],
           trick: i,
+          start: trick[6],
+          end: trick[7],
         }
         elements[typeOfTrick].push(obj);
         /*
@@ -290,6 +291,19 @@ class Application extends React.Component {
       }
     }
     return elements;
+  }
+
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
+  
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+  
+  componentDidUpdate() {
+    this.scrollToBottom();
   }
 
   render() {
@@ -325,6 +339,9 @@ class Application extends React.Component {
               <th>Points</th>
             </tr>
           {this.state.visual_trick_list.map(txt => <tr><td>{txt[0]}</td><td>{txt[1]}</td><td>{txt[2]}</td></tr>)}
+          <div style={{ float:"left", clear: "both" }}
+             ref={(el) => { this.messagesEnd = el; }}>
+          </div>
           </table>
           </div>
           </div>
