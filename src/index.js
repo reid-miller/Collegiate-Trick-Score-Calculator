@@ -104,7 +104,7 @@ class Application extends React.Component {
   }
   //Reset score
   reset() {
-    this.setState({ score: 0, front: true, tricks_done: [], }); // Reset Score   
+    this.setState({ score: 0, front: true, tricks_done: [], visual_trick_list: [], message: "Trick Run Reset"}); // Reset Score   
   }
 
   // Determines what direction you need to be to start a trick and what direction
@@ -330,6 +330,7 @@ class Application extends React.Component {
         />
 
           <div>Current Position: <strong>{this.state.front ? "Front" : "Back"}</strong></div>
+          <br />
           
           <div class="row d-flex justify-content-center table-responsive">
           <table id="trick-table" class="table w-75">
