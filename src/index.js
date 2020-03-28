@@ -65,13 +65,21 @@ class Application extends React.Component {
       tricks_done: [],
       value: '',
       tricks: this.setUp(),
-      message: "",
+      message: "You are riding on one ski. Enter tricks below or learn how to use this through the link in the footer",
       visual_trick_list: [],
+      start: true,
     }
   }
 
   switchWake() {
     this.setState({ wake: !this.state.wake })
+  }
+
+  //Reset score
+  reset() {
+    // Set what ski they are riding on (visualy)
+    var ski = this.state.oneSki ? "one ski" : "two skis";
+    this.setState({ score: 0, front: true, tricks_done: [], visual_trick_list: [], message: "Trick run reset: You are riding on " + ski + "\n"}); // Reset Score   
   }
 
   switchSki() {
@@ -102,12 +110,7 @@ class Application extends React.Component {
 
     this.reset();
   }
-  //Reset score
-  reset() {
-    // Set what ski they are riding on (visualy)
-    var ski = this.state.oneSki ? "one ski" : "two skis";
-    this.setState({ score: 0, front: true, tricks_done: [], visual_trick_list: [], message: "Trick run reset: You are riding on " + ski}); // Reset Score   
-  }
+  
 
   // Determines what direction you need to be to start a trick and what direction
   // you'll be after the trick. Returns start postion followed by end ex: FF, FB, BF, BB
@@ -163,6 +166,8 @@ class Application extends React.Component {
     var trick = null;
     var front = this.state.front;
     var message = null;
+
+    this.setState({start: false});
 
     // Check if reverse
     if (trickCode.charAt(0) === 'R') {
@@ -306,11 +311,15 @@ class Application extends React.Component {
   componentDidUpdate() {
     this.scrollToBottom();
   }
+  
 
   render() {
     const score = this.state.score;
     const message = this.state.message;
-    console.log(message);
+    var thing = message == null ? false : message.includes("Trick run reset");
+    const start = this.state.start;
+    
+
     // <img src={require('./trickski.jpg')} height="150px" width="150px" alt="dwq"/> to add photo
     // Wake button:           <button onClick={() => this.switchWake()}>{this.state.wake ? "Surface" : "Wake"}</button>
 
@@ -323,7 +332,8 @@ class Application extends React.Component {
         <div className="text-center">
         </div>
         <br/>
-        <div><p>{message}</p></div>
+        <div class="justify-content-center"><p class="sizing-message ">{message}</p>{thing || start ? <button onClick={() => this.switchSki()}>Switch Ski</button>: null}</div>
+        <div>{thing || start ? <br /> : null}</div>
         <InputField
           onSubmit={(trickCode) => this.handleSubmit(trickCode)}
         />
@@ -346,7 +356,7 @@ class Application extends React.Component {
           </div>
 
           <div>
-              <button onClick={() => this.reset()}>Reset</button>
+              {thing || start ? null : <button onClick={() => this.reset()}>Reset</button>}
           </div>
           <br />
 
@@ -355,7 +365,7 @@ class Application extends React.Component {
 
           <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
             <div class="container text-center">
-              <small><p>Switch Ski | How to Use | USA Water Ski</p></small>
+              <small><p>How to Use | <a rel="noopener noreferrer" target="_blank" href="http://www.usawaterski.org/">USA Water Ski</a></p></small>
               <small>Made by <a rel="noopener noreferrer" target="_blank" href="http://reidhub.com">Reid Miler</a></small>
             </div>
           </footer>

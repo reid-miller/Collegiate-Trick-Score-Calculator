@@ -23,3 +23,21 @@ body {
 #messages {
     min-height: 1%;
 }
+
+#switch-ski {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .sizing-message {
+      max-width: 25%;
+      margin-left: auto;
+      margin-right: auto;
+  }
