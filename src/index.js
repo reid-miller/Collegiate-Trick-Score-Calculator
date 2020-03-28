@@ -110,32 +110,14 @@ class Application extends React.Component {
 
     this.reset();
   }
-  
-
-  // Determines what direction you need to be to start a trick and what direction
-  // you'll be after the trick. Returns start postion followed by end ex: FF, FB, BF, BB
-  positon(trickCode) {
-
-    // Tricks you must be front for
-    if (!trickCode.includes("BB") && (trickCode.includes("S") || trickCode.includes("B") || trickCode.includes("FB") || trickCode.includes("FF") || trickCode.includes("O"))) {
-
-      if (trickCode.includes("O") || trickCode.includes("FF") || trickCode.includes("S"))
-        return "FF";
-      else
-        return "FB"
-
-    }
-    // Tricks you must be back for
-    else {
-      if (trickCode.includes("BB"))
-        return "BB";
-      else
-        return "BF";
-    }
-  }
 
   // Finds trick info based off trick code
   findTrick(trickCode) {
+
+    if(trickCode.charAt(0) === 'R') {
+      return null;
+    }
+
     var tricks = this.state.tricks;
     var trick = null; 
     var wake = false;
@@ -153,12 +135,15 @@ class Application extends React.Component {
       }
     }
 
+    if (trick === null) {
+      return null;
+    }
+
    return [trick, wake];
   }
 
   //Called when enter is pressed in the input field
   handleSubmit(trickCode) {
-
     var wake = false;
     var reverse = false;
     var ski; // Based off what type of ski they are on
@@ -166,49 +151,101 @@ class Application extends React.Component {
     var trick = null;
     var front = this.state.front;
     var message = null;
+    var reverseTrick = null;
+    var reverseTrickCode = null;
 
     this.setState({start: false});
 
     // Check if reverse
     if (trickCode.charAt(0) === 'R') {
       reverse = true;
+
+      // See if the user typed R or R...
+      
+        if (trickCode.length > 1) {
+        
+
+        reverseTrickCode = trickCode.substring(1);
+        reverseTrick = this.findTrick(reverseTrickCode);
+
+        if(reverseTrick === null) {
+          this.setState({message: "Trick not foundTTT"});
+          return;
+        }
+
+        reverseTrick = reverseTrick[0];
+
+        trickCode = 'R';
+      }
+
+      
         if(trickCode === 'R') {
+          var position = "Nothing";
           // If it's just R than try pulling the other tricks
 
           // Try doing the last trick
-          if(this.state.tricks_done.length - 1 < 0) {alert("This needs to be fixed")}
-          var lastTrick = this.state.tricks_done[this.state.tricks_done.length - 1];
-          if((front === true && this.positon(lastTrick).charAt(0) === 'F') || (front === false && this.positon(lastTrick).charAt(0) === 'B')) {
+          
+          // If we try reverse as first trick
+          if(this.state.tricks_done.length - 1 < 0) {
+            this.setState({message: "No trick to do the reverse of"});
+            return;
+          }
+          var lastTrickCode = this.state.tricks_done[this.state.tricks_done.length - 1];
+          
+          var lastTrick = this.findTrick(lastTrickCode);
+          if(lastTrick !== null) {
+            position = lastTrick[0].start; // Get what position you need to start in
+          }
+        
+          if((front === true && position === 'F') || (front === false && position === 'B')) {
             // Set trick code to last trick
-            trickCode = lastTrick;
-            console.log("This is last trick: " + trickCode)
-
+            trickCode = lastTrickCode;
           }
           // If that does not work try doing the reverse of the 2nd to last trick trick
           else {
-          if(this.state.tricks_done.length - 2 < 0) {alert("This needs to be fixed")}
-          lastTrick = this.state.tricks_done[this.state.tricks_done.length - 2];
-          if((front === true && this.positon(lastTrick).charAt(0) === 'F') || (front === false && this.positon(lastTrick).charAt(0) === 'B')) {
-            // Set trick code to last trick
-            trickCode = lastTrick;
-            console.log("This is last trick: " + trickCode)
+            if(this.state.tricks_done.length - 2 < 0) {alert("No trick to do the reverse of")}
 
+          lastTrickCode = this.state.tricks_done[this.state.tricks_done.length - 2];
+          lastTrick = this.findTrick(lastTrickCode);
+          if(lastTrick !== null) {
+            position = lastTrick[0].start; // Get what position you need to start in
+          }
+          if((front === true && position === 'F') || (front === false && position === 'B')) {
+            // Set trick code to last trick
+            trickCode = lastTrickCode;
+            console.log("Made it here " + trickCode);
           }
         }
       }
-        //trickCode = trickCode.substring(1);
     }
 
     console.log(trickCode);
     var result = this.findTrick(trickCode);
-    trick = result[0];
-    wake = result[1];
+    console.log(result);
+
+    //If R... was typed and there was no result
 
     // If we did not find the trick
-    if (trick === null) {
+    if (result === null) {
       this.setState({message: "Trick not found"});
       return;
     }
+
+    if (reverseTrick !== null && result[0] !== reverseTrick) {
+      this.setState({message: "Can not do reverse of that trick with current setup"});
+      return;
+    }
+
+    trick = result[0];
+    wake = result[1];
+
+    if (reverse && !trick.score1Ski.includes('*') && !trick.scoreWake1Ski.includes('%')) {
+      this.setState({message: trick.name + " is not reversable"});
+      return;
+    } else if (reverse && !trick.scoreWake1Ski.includes('*') && !trick.scoreWake1Ski.includes('%')) {
+      this.setState({message: trick.name + " is not reversable"});
+      return;
+    } 
 
     // Check if we can legally do this trick ex: Trying to do a B while already back is imposible
     var startPosition = trick.start === "F"; // Front === True
