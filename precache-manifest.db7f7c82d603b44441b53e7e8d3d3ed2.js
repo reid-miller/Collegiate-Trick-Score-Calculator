@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "99c5ec7fd417bad9e8df00555d02d8e7",
+    "revision": "c9bacdc7d3d841cada5a6c50dc1aea5b",
     "url": "/Collegiate-Trick-Score-Calculator/index.html"
   },
   {
@@ -8,16 +8,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Collegiate-Trick-Score-Calculator/static/css/2.593285ce.chunk.css"
   },
   {
-    "revision": "c5161da69cfc0c5ea5a4",
-    "url": "/Collegiate-Trick-Score-Calculator/static/css/main.8ff0610c.chunk.css"
+    "revision": "fb8e6aba9edfcd228eef",
+    "url": "/Collegiate-Trick-Score-Calculator/static/css/main.d282b12b.chunk.css"
   },
   {
     "revision": "abcbbda3ddf044bc4de9",
     "url": "/Collegiate-Trick-Score-Calculator/static/js/2.27658abc.chunk.js"
   },
   {
-    "revision": "c5161da69cfc0c5ea5a4",
-    "url": "/Collegiate-Trick-Score-Calculator/static/js/main.ad017c49.chunk.js"
+    "revision": "fb8e6aba9edfcd228eef",
+    "url": "/Collegiate-Trick-Score-Calculator/static/js/main.9efd135b.chunk.js"
   },
   {
     "revision": "480cb10394230a3aad93",
