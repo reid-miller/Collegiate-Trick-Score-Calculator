@@ -39,7 +39,6 @@ class TrickList extends React.Component {
         typeOfTrick += 1;
       }
     }
-    console.log(elements);
     return (
       <div>
         <div className="trick-container row">
@@ -169,7 +168,7 @@ class Application extends React.Component {
         reverseTrick = this.findTrick(reverseTrickCode);
 
         if(reverseTrick === null) {
-          this.setState({message: "Trick not foundTTT"});
+          this.setState({message: "Trick not found"});
           return;
         }
 
@@ -213,15 +212,12 @@ class Application extends React.Component {
           if((front === true && position === 'F') || (front === false && position === 'B')) {
             // Set trick code to last trick
             trickCode = lastTrickCode;
-            console.log("Made it here " + trickCode);
           }
         }
       }
     }
 
-    console.log(trickCode);
     var result = this.findTrick(trickCode);
-    console.log(result);
 
     //If R... was typed and there was no result
 
