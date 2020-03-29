@@ -235,11 +235,11 @@ class Application extends React.Component {
     trick = result[0];
     wake = result[1];
 
-    if (reverse && !trick.score1Ski.includes('*') && !trick.scoreWake1Ski.includes('%')) {
-      this.setState({message: trick.name + " is not reversable"});
+    if (reverse && !trick.score1Ski.includes('*') && !trick.score1Ski.includes('%')) {
+      this.setState({message: trick.name + " is not reversableT"});
       return;
     } else if (reverse && !trick.scoreWake1Ski.includes('*') && !trick.scoreWake1Ski.includes('%')) {
-      this.setState({message: trick.name + " is not reversable"});
+      this.setState({message: trick.name + " is not reversableh"});
       return;
     } 
 
