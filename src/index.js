@@ -398,7 +398,7 @@ class Application extends React.Component {
 
           <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
             <div class="container text-center">
-              <small><p>How to Use | <a rel="noopener noreferrer" target="_blank" href="http://www.usawaterski.org/">USA Water Ski</a></p></small>
+              <small><p><a rel="noopener noreferrer" target="_blank" href="https://github.com/reid-miller/Collegiate-Trick-Score-Calculator/blob/master/src/Trick-Scores.pdf">Trick List</a> | <a rel="noopener noreferrer" target="_blank" href="https://github.com/reid-miller/Collegiate-Trick-Score-Calculator/blob/master/README.md">How to Use</a> | <a rel="noopener noreferrer" target="_blank" href="http://www.usawaterski.org/">USA Water Ski</a></p></small>
               <small>Made by <a rel="noopener noreferrer" target="_blank" href="http://reidhub.com">Reid Miler</a></small>
             </div>
           </footer>
