@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Collegiate-Trick-Score-Calculator/static/css/main.d282b12b.chunk.css",
-    "main.js": "/Collegiate-Trick-Score-Calculator/static/js/main.56f852c2.chunk.js",
-    "main.js.map": "/Collegiate-Trick-Score-Calculator/static/js/main.56f852c2.chunk.js.map",
+    "main.js": "/Collegiate-Trick-Score-Calculator/static/js/main.ccff3509.chunk.js",
+    "main.js.map": "/Collegiate-Trick-Score-Calculator/static/js/main.ccff3509.chunk.js.map",
     "runtime-main.js": "/Collegiate-Trick-Score-Calculator/static/js/runtime-main.e91d390a.js",
     "runtime-main.js.map": "/Collegiate-Trick-Score-Calculator/static/js/runtime-main.e91d390a.js.map",
     "static/css/2.593285ce.chunk.css": "/Collegiate-Trick-Score-Calculator/static/css/2.593285ce.chunk.css",
     "static/js/2.27658abc.chunk.js": "/Collegiate-Trick-Score-Calculator/static/js/2.27658abc.chunk.js",
     "static/js/2.27658abc.chunk.js.map": "/Collegiate-Trick-Score-Calculator/static/js/2.27658abc.chunk.js.map",
     "index.html": "/Collegiate-Trick-Score-Calculator/index.html",
-    "precache-manifest.fac65ac8845298e6b7a1f3a6b976e34a.js": "/Collegiate-Trick-Score-Calculator/precache-manifest.fac65ac8845298e6b7a1f3a6b976e34a.js",
+    "precache-manifest.be4e107b16a8c24148b8a1e61733a12b.js": "/Collegiate-Trick-Score-Calculator/precache-manifest.be4e107b16a8c24148b8a1e61733a12b.js",
     "service-worker.js": "/Collegiate-Trick-Score-Calculator/service-worker.js",
     "static/css/2.593285ce.chunk.css.map": "/Collegiate-Trick-Score-Calculator/static/css/2.593285ce.chunk.css.map",
     "static/css/main.d282b12b.chunk.css.map": "/Collegiate-Trick-Score-Calculator/static/css/main.d282b12b.chunk.css.map"
@@ -19,6 +19,6 @@
     "static/css/2.593285ce.chunk.css",
     "static/js/2.27658abc.chunk.js",
     "static/css/main.d282b12b.chunk.css",
-    "static/js/main.56f852c2.chunk.js"
+    "static/js/main.ccff3509.chunk.js"
   ]
 }
