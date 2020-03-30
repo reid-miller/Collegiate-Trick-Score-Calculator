@@ -159,15 +159,15 @@ class Application extends React.Component {
     if(this.state.visual_trick_list.length === 0) {
       if(trickCode === "B OOC") {
         this.state.visual_trick_list.push(["Out of Course Back", "B OOC", 0]);
-        this.setState({front: false, message: ""});
+        this.setState({front: false, message: null});
         return;
       } else if (trickCode === "TB OOC") {
         this.state.visual_trick_list.push(["Out of Course Toe Back", "TB OOC", 0]);
-        this.setState({front: false, message: ""});
+        this.setState({front: false, message: null});
         return;
       } else if (trickCode === "LB OOC") {
         this.state.visual_trick_list.push(["Out of Course Line Back", "LB OOC", 0]);
-        this.setState({front: false, message: ""});
+        this.setState({front: false, message: null});
         return;
       }
     }
