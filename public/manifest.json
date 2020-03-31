@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Trick Calculator",
+  "name": "Trick Score Calculator,
   "icons": [
     {
       "src": "favicon.ico",
