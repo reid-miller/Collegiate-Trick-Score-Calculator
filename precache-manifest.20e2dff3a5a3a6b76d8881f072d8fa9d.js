@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "520e53fc7d486327293296e6c5a929f5",
+    "revision": "a7fab1c12cf92c5c4fc2253143204962",
     "url": "/Collegiate-Trick-Score-Calculator/index.html"
   },
   {
