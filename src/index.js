@@ -67,7 +67,9 @@ class Application extends React.Component {
       message: "You are riding on one ski. Enter tricks below or learn how to use this through the link in the footer",
       visual_trick_list: [],
       start: true,
+      mobile: false,
     }
+    this.state.mobile = this.isMobileDevice();
   }
 
   switchWake() {
@@ -219,7 +221,10 @@ class Application extends React.Component {
           }
           // If that does not work try doing the reverse of the 2nd to last trick trick
           else {
-            if(this.state.tricks_done.length - 2 < 0) {alert("No trick to do the reverse of")}
+            if(this.state.tricks_done.length - 2 < 0) {
+              this.setState({message: "No trick to do the reverse of"});
+              return;
+            }
 
           lastTrickCode = this.state.tricks_done[this.state.tricks_done.length - 2];
           lastTrick = this.findTrick(lastTrickCode);
@@ -252,14 +257,6 @@ class Application extends React.Component {
     trick = result[0];
     wake = result[1];
 
-    if (reverse && !trick.score1Ski.includes('*') && !trick.score1Ski.includes('%')) {
-      this.setState({message: trick.name + " is not reversable"});
-      return;
-    } else if (reverse && !trick.scoreWake1Ski.includes('*') && !trick.scoreWake1Ski.includes('%')) {
-      this.setState({message: trick.name + " is not reversable"});
-      return;
-    } 
-
     // Check if we can legally do this trick ex: Trying to do a B while already back is imposible
     var startPosition = trick.start === "F"; // Front === True
     var endPosition =  trick.end === "F"; // Front === True
@@ -290,6 +287,12 @@ class Application extends React.Component {
         toAdd = trick.score1Ski;
     }
 
+
+    // Check if we are doing a reverse, if so then make sure it is a reversable trick
+    if(reverse && !toAdd.includes('*')) {
+      this.setState({message: trick.name + " is not reversable (("});
+      return;
+    }
     // Set scores and states
     var visual_list = this.state.visual_trick_list;
     var name = (reverse) ? 'Reverse ' + trick.name : trick.name; 
@@ -351,7 +354,9 @@ class Application extends React.Component {
 
 
   scrollToBottom = () => {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    if(!this.state.mobile) {
+      this.messagesEnd.scrollIntoView({behavior: "smooth" });
+    }
   }
   
   componentDidMount() {
@@ -361,6 +366,12 @@ class Application extends React.Component {
   componentDidUpdate() {
     this.scrollToBottom();
   }
+
+  // From: https://coderwall.com/p/i817wa/one-line-function-to-detect-mobile-devices-with-javascript
+  // To help with the issue of table scroll on mobile
+  isMobileDevice() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+  };
   
 
   render() {
@@ -398,8 +409,11 @@ class Application extends React.Component {
               <th>Code</th>
               <th>Points</th>
             </tr>
-          {this.state.visual_trick_list.map(txt => <tr><td>{txt[0]}</td><td>{txt[1]}</td><td>{txt[2]}</td></tr>)}
-          <div style={{ float:"left", clear: "both" }}
+
+          {this.state.mobile ? this.state.visual_trick_list.slice(0).reverse().map(txt => <tr><td>{txt[0]}</td><td>{txt[1]}</td><td>{txt[2]}</td></tr>) : this.state.visual_trick_list.map(txt => <tr><td>{txt[0]}</td><td>{txt[1]}</td><td>{txt[2]}</td></tr>)}
+          
+
+          <div id="scroll-div" style={{ float:"left", clear: "both" }}
              ref={(el) => { this.messagesEnd = el; }}>
           </div>
           </table>
