@@ -2,7 +2,7 @@
   "name": "collegiate-trick-score-calculator",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://reid-miller.github.io/Collegiate-Trick-Score-Calculator",
+  "homepage": "http://trickcalc.com/",
   "dependencies": {
     "bootstrap": "^4.4.1",
     "bootstrap-table": "^1.16.0",
