@@ -290,7 +290,7 @@ class Application extends React.Component {
 
     // Check if we are doing a reverse, if so then make sure it is a reversable trick
     if(reverse && !toAdd.includes('*')) {
-      this.setState({message: trick.name + " is not reversable (("});
+      this.setState({message: trick.name + " is not reversable"});
       return;
     }
     // Set scores and states
